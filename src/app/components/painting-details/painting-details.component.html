@@ -1,0 +1,47 @@
+<p-carousel
+  [value]="paintingDetails"
+  [numVisible]="3"
+  [numScroll]="1"
+  [circular]="true"
+  [autoplayInterval]="5000"
+  [responsiveOptions]="responsiveOptions"
+  styleClass="text-center mt-2"
+  *ngIf="allowedBidTime && paintingDetails && mediaUrl"
+>
+  <p-header>
+    <h4>Select Painting to bid</h4>
+    <small
+      >Bidding Time : {{ allowedBidTime["start"] | uppercase }} to
+      {{ allowedBidTime["end"] | uppercase }} Every Day</small
+    >
+  </p-header>
+  <ng-template let-item pTemplate="item">
+    <div class="car-details">
+      <div class="p-grid p-nogutter">
+        <div class="p-col-12 bg-danger">
+          <img [src]="mediaUrl + item.picture" style="width: 100%;" />
+        </div>
+        <div class="p-col-12 car-data text-left ml-5">
+          <div class="car-title">
+            Painting Name : {{ item.paintingName | titlecase }}
+          </div>
+          <div
+            class="car-title"
+            [innerText]="'Author : ' + item.creator | titlecase"
+          ></div>
+          <div class="car-title">
+            Minimum Bid Amount :
+            {{ item.claimedAmt | currency: "INR" }}
+          </div>
+          <button
+            class="btn btn-success mt-2"
+            [disabled]="!bidButtonState"
+            (click)="onClickBid(item)"
+          >
+            Bid
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>

@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col text-right">
+    <p class="h5">You are Login as Guest</p>
+  </div>
+</div>
+<app-painting-details
+  [paintingDetails]="paintingDetailsArr"
+  [allowedBidTime]="allowedBidTime"
+  [bidButtonState]="bidButtonState"
+  [mediaUrl]="mediaUrl"
+  (bidEventEmitter)="selectedPaintingToBid($event)"
+></app-painting-details>

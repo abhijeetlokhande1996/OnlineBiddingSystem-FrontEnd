@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-4">
+    <a [routerLink]="['../home']" class="btn btn-link">Return to Home</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-1"></div>
+  <div class="col-8 mt-2">
+    <div class="row">
+      <div class="col-6">
+        <p-card
+          [header]="'Painting Name : ' + paintingModel.paintingName"
+          [subheader]="
+            'Minimum Bid Amount : ' +
+            (paintingModel.claimedAmt | currency: 'INR')
+          "
+          styleClass="ui-card-shadow"
+        >
+          <p-header>
+            <img
+              [src]="mediaUrl + paintingModel.picture"
+              class="bg-danger h-25"
+            />
+          </p-header>
+          <div></div>
+          <p-footer>
+            <form
+              [formGroup]="biddingForm"
+              class="text-left"
+              (ngSubmit)="onBidSubmit()"
+            >
+              <div class="form-group">
+                <label>Enter Amount</label>
+                <input
+                  type="number"
+                  [formControlName]="'biddingAmt'"
+                  class="form-control"
+                />
+              </div>
+
+              <button
+                class="btn btn-success"
+                type="submit"
+                [disabled]="!biddingForm.valid"
+              >
+                Submit Bid
+              </button>
+              <p
+                class="text-danger help-block"
+                *ngIf="
+                  !biddingForm.valid && biddingForm.get('biddingAmt').dirty
+                "
+              >
+                Your bid should be greater than minimum bid and your last bid
+                amount.
+              </p>
+            </form>
+          </p-footer>
+        </p-card>
+      </div>
+      <div class="col-6">
+        <app-bidders-table
+          [biddinDataForTable]="biddinDataForTable"
+        ></app-bidders-table>
+
+        <p class="text-success h5" *ngIf="isBidEnd">
+          Winner is {{ biddinDataForTable[0][0] | uppercase }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-3 h5 mt-3 text-primary">
+    <p *ngIf="!isBidEnd">
+      Bid ends in <span class="text-danger">{{ timeLeft }}</span> seconds.
+    </p>
+  </div>
+</div>
